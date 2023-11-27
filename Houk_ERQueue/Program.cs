@@ -21,11 +21,11 @@ namespace Houk_ERQueue
             //Creates a dictionary that stores the patients, their priority, and a timestamp to be used for listing all patients
             Dictionary<Patient, (int, DateTime)> AllPatients = new Dictionary<Patient, (int, DateTime)>();
 
-            //add patients to the queue from Patients - 1.csv
+            //add patients to the queue from Patients - 1.csv, skipping the header line
             string[] lines = System.IO.File.ReadAllLines(@"Patients-1.csv");
-            foreach (string line in lines)
+            for (int i = 1; i < lines.Length; i++)
             {
-                string[] values = line.Split(',');
+                string[] values = lines[i].Split(',');
                 string firstName = values[0];
                 string lastName = values[1];
                 var birthdate = DateOnly.ParseExact(values[2], "M/d/yyyy", CultureInfo.InvariantCulture);
