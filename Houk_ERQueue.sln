@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Houk_ERQueue", "Houk_ERQueue\Houk_ERQueue.csproj", "{3B28F5FD-0154-4694-81FA-9CB3FA5F08B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B28F5FD-0154-4694-81FA-9CB3FA5F08B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B28F5FD-0154-4694-81FA-9CB3FA5F08B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B28F5FD-0154-4694-81FA-9CB3FA5F08B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B28F5FD-0154-4694-81FA-9CB3FA5F08B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A338C9B7-DB06-46A5-85D8-E59EB8F0B771}
+	EndGlobalSection
+EndGlobal
