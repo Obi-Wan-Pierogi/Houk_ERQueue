@@ -1,16 +1,15 @@
 ﻿// Lee Houk
 // IT113
 // NOTES: This project was quite the challenge and involved a ton of research to get working to spec.
-//        I originally used a separate class for the PriorityQueue as well as for the Patient in order to
-//        keep things more organized. I found that by default the PriorityQueue did not have a stable
+//        I used a separate class for the PriorityQueue as well as for the Patient in order to
+//        keep things more organized. I also incorporated a dictionary to run side by side with the 
+//        queue for access to patient data. I found that by default the PriorityQueue did not have a stable
 //        sort, so I added a timestamp in the enqueue process in addition to the priority to keep track of when patients  
 //        were added to the queue. Then when comparing, I first looked at priority, then at timestamp to keep FIFO. 
 // BEHAVIORS NOT IMPLIMENTED AND WHY: I got them all working.
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.IO;
+
 
 namespace Houk_ERQueue
 {
@@ -18,11 +17,10 @@ namespace Houk_ERQueue
     {       
         static void Main(string[] args)
         {
-            PriorityQueue<Patient, (int, DateTime)> ERQueue = new PriorityQueue<Patient, (int, DateTime)>();
-            //Creates a dictionary that stores the patients, their priority, and a timestamp to be used for listing all patients
-            Dictionary<Patient, (int, DateTime)> AllPatients = new Dictionary<Patient, (int, DateTime)>();
-
-            //add patients to the queue from Patients - 1.csv, skipping the header line
+            // Create a priority queue that stores the patients, their priority, and when they were added to the queue
+            ERQueue ERQueue = new();
+            
+            // Add patients to the queue from Patients - 1.csv, skipping the header line
             string[] lines = System.IO.File.ReadAllLines(@"Patients-1.csv");
             for (int i = 1; i < lines.Length; i++)
             {
@@ -31,7 +29,7 @@ namespace Houk_ERQueue
                 string lastName = values[1];
                 var birthdate = DateOnly.ParseExact(values[2], "M/d/yyyy", CultureInfo.InvariantCulture);
                 int priority = int.Parse(values[3]);
-                Enqueue(new Patient(lastName, firstName, birthdate, priority));
+                ERQueue.Enqueue(new Patient(lastName, firstName, birthdate, priority));
             }
 
             Console.WriteLine("Welcome to the ER Priority Queue");
@@ -140,62 +138,26 @@ namespace Houk_ERQueue
                             }
                         }
                         // Add the patient to the priority queue
-                        Console.WriteLine(Enqueue(new Patient(lastName, firstName, birthdate, priority)));
+                        Console.WriteLine(ERQueue.Enqueue(new Patient(lastName, firstName, birthdate, priority)));
                         break;
                     case "P":
                         // Process the patient
-                        Console.WriteLine(Dequeue(out Patient patient));
+                        Console.WriteLine(ERQueue.Dequeue(out Patient patient));
                         break;
                     case "L":
                         // List all patients
-                        Console.WriteLine(ListAll().ToString());
+                        Console.WriteLine(ERQueue.ListAll());
                         break;
                     case "Q":
                         // Quit the program
                         exit = true;
                         break;
+                    default:
+                        // If the user enters an invalid choice, display a message and return to the menu
+                        Console.WriteLine("Please enter a valid choice \n");
+                        break;
                 }
-            }
-            //Adds a patient to the priority queue and the dictionary, returns the number of patients in the queue
-            string Enqueue(Patient patient)
-            {
-                ERQueue.Enqueue(patient, (patient.GetPriority(), DateTime.Now));
-                AllPatients.Add(patient, (patient.GetPriority(), DateTime.Now));
-                return "The patient has been added. \n" +
-                        "There are currently " + ERQueue.Count + " patients in the queue \n";
-            }
-            //Removes a patient from the priority queue and the dictionary
-            string Dequeue(out Patient patient)
-            {
-                // if there are no patients in the queue, return a message
-                if (ERQueue.Count == 0)
-                {
-                    patient = null;
-                    return "No patients in queue \n";
-                }
-                ERQueue.TryDequeue(out patient, out _);
-                AllPatients.Remove(patient);
-                return "Processed: " + patient.ToString() + "\n";
-            }
-            //Accesses the dictionary and returns a string of all patients sorted by their position in the queue
-            string ListAll()
-            {
-                // if there are no patients in the queue, return a message
-                if (ERQueue.Count == 0)
-                {
-                    return "No patients in queue \n";
-                }
-                //order the dictionary by priority first, and then when they were added to the queue
-                var orderedPatients = AllPatients.OrderBy(x => x.Value.Item1).ThenBy(x => x.Value.Item2);
-                StringBuilder sb = new StringBuilder();
-                int count = 0;
-                foreach (KeyValuePair<Patient, (int, DateTime)> kvp in orderedPatients)
-                {
-                    count++;
-                    sb.Append(kvp.Key.ToString() + " " + "Position in queue: " + count + "\n");
-                }
-                return sb.ToString();
-            }
+            }           
         }
     }
 }
