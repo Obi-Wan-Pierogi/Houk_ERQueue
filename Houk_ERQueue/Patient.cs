@@ -13,7 +13,7 @@ namespace Houk_ERQueue
         private DateOnly _Birthdate { get; }
         private int Priority { get; }
 
-        // constructor. if age is < 21 or > 65, priority is 1.
+        // Constructor. If age is < 21 or > 65, priority is 1.
         public Patient(string lastName, string firstName, DateOnly birthdate, int priority)
         {
             this._LastName = lastName;
@@ -28,13 +28,13 @@ namespace Houk_ERQueue
                 this.Priority = priority;
             }
         }
-        //Overrides the ToString method to return the patient's name, birthdate, and priority
+        // Overrided the .ToString() method to return the patient's name, birthdate, and priority
         public override string ToString()
         {
             return _LastName + ", " + _FirstName + ", " + _Birthdate + ", " + Priority;
 
         }
-        //Getters for the patient's name, birthdate, and priority
+        // Getters for the patient's name, birthdate, and priority
         public string GetLastName()
         {
             return _LastName;

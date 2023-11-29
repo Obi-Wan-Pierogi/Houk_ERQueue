@@ -18,11 +18,10 @@ namespace Houk_ERQueue
     {       
         static void Main(string[] args)
         {
-            PriorityQueue<Patient, (int, DateTime)> ERQueue = new PriorityQueue<Patient, (int, DateTime)>();
-            //Creates a dictionary that stores the patients, their priority, and a timestamp to be used for listing all patients
-            Dictionary<Patient, (int, DateTime)> AllPatients = new Dictionary<Patient, (int, DateTime)>();
-
-            //add patients to the queue from Patients - 1.csv, skipping the header line
+            // Create a hospital object
+            Hospital Hospital = new();
+            
+            // Add patients to the queue from Patients - 1.csv, skipping the header line
             string[] lines = System.IO.File.ReadAllLines(@"Patients-1.csv");
             for (int i = 1; i < lines.Length; i++)
             {
@@ -31,7 +30,7 @@ namespace Houk_ERQueue
                 string lastName = values[1];
                 var birthdate = DateOnly.ParseExact(values[2], "M/d/yyyy", CultureInfo.InvariantCulture);
                 int priority = int.Parse(values[3]);
-                Enqueue(new Patient(lastName, firstName, birthdate, priority));
+                Hospital.Add(new Patient(lastName, firstName, birthdate, priority));
             }
 
             Console.WriteLine("Welcome to the ER Priority Queue");
@@ -140,15 +139,15 @@ namespace Houk_ERQueue
                             }
                         }
                         // Add the patient to the priority queue
-                        Console.WriteLine(Enqueue(new Patient(lastName, firstName, birthdate, priority)));
+                        Console.WriteLine(Hospital.Add(new Patient(lastName, firstName, birthdate, priority)));
                         break;
                     case "P":
                         // Process the patient
-                        Console.WriteLine(Dequeue(out Patient patient));
+                        Console.WriteLine(Hospital.Process());
                         break;
                     case "L":
                         // List all patients
-                        Console.WriteLine(ListAll().ToString());
+                        Console.WriteLine(Hospital.ListAll());
                         break;
                     case "Q":
                         // Quit the program
