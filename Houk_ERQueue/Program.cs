@@ -1,10 +1,11 @@
 ﻿// Lee Houk
 // IT113
 // NOTES: This project was quite the challenge and involved a ton of research to get working to spec.
-//        I originally used a separate class for the PriorityQueue as well as for the Patient in order to
-//        keep things more organized. I found that by default the PriorityQueue did not have a stable
-//        sort, so I added a timestamp in the enqueue process in addition to the priority to keep track of when patients  
-//        were added to the queue. Then when comparing, I first looked at priority, then at timestamp to keep FIFO. 
+//        I used a separate class for the PriorityQueue, Dictionary, and Patient in order to keep things 
+//        more organized. I am using a Hospital class to manage requests from the menu. I found that by default 
+//        the PriorityQueue did not have a stable sort, so I added a timestamp in the enqueue process in addition  
+//        to the priority to keep track of when patient swere added to the queue. Then when comparing, I first
+//        looked at priority, then at timestamp to keep FIFO. 
 // BEHAVIORS NOT IMPLIMENTED AND WHY: I got them all working.
 using System.Collections;
 using System.Collections.Generic;
