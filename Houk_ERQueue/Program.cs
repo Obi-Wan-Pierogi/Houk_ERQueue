@@ -155,47 +155,7 @@ namespace Houk_ERQueue
                         exit = true;
                         break;
                 }
-            }
-            //Adds a patient to the priority queue and the dictionary, returns the number of patients in the queue
-            string Enqueue(Patient patient)
-            {
-                ERQueue.Enqueue(patient, (patient.GetPriority(), DateTime.Now));
-                AllPatients.Add(patient, (patient.GetPriority(), DateTime.Now));
-                return "The patient has been added. \n" +
-                        "There are currently " + ERQueue.Count + " patients in the queue \n";
-            }
-            //Removes a patient from the priority queue and the dictionary
-            string Dequeue(out Patient patient)
-            {
-                // if there are no patients in the queue, return a message
-                if (ERQueue.Count == 0)
-                {
-                    patient = null;
-                    return "No patients in queue \n";
-                }
-                ERQueue.TryDequeue(out patient, out _);
-                AllPatients.Remove(patient);
-                return "Processed: " + patient.ToString() + "\n";
-            }
-            //Accesses the dictionary and returns a string of all patients sorted by their position in the queue
-            string ListAll()
-            {
-                // if there are no patients in the queue, return a message
-                if (ERQueue.Count == 0)
-                {
-                    return "No patients in queue \n";
-                }
-                //order the dictionary by priority first, and then when they were added to the queue
-                var orderedPatients = AllPatients.OrderBy(x => x.Value.Item1).ThenBy(x => x.Value.Item2);
-                StringBuilder sb = new StringBuilder();
-                int count = 0;
-                foreach (KeyValuePair<Patient, (int, DateTime)> kvp in orderedPatients)
-                {
-                    count++;
-                    sb.Append(kvp.Key.ToString() + " " + "Position in queue: " + count + "\n");
-                }
-                return sb.ToString();
-            }
+            }            
         }
     }
 }
